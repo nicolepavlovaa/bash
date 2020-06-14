@@ -2,12 +2,12 @@ if test $# -eq 2
 then
  if test -f $1
  then
-  for i in {1,2,3}; do cp $1 copy$i; done
-  grep $2 $1
-  read result
-  grep $2 $1 | wc -l | cat > $result
-  mv $result ~/Desktop/home
- else This filee does not exist
+  cat $1 | tee copy-1 copy-2 copy-3
+  grep "$2" $1 
+  read name
+  grep "$2" $1 | wc -l > $name
+  mv $name ~/Desktop/mydirectory
+ else filee does not exist
  fi
-else echo wrong number of parameters
+else echo wrong number of paramters
 fi

@@ -1,16 +1,19 @@
-check=0
+flag=0
 for i in $*
- do if test ! -f "$i" 
- then 
-  echo all arent files, $i is not filee
-  check=1
+do 
+ if test ! -f $i
+ then
+  echo not all files exist
+  flag=1
   break
- else continue
  fi
 done
-if test $check -eq 0
-then 
+if test $flag -eq 0
+then
  read str
- for i in $*; do grep $str $i | wc -l; done
+ for i in $*
+ do 
+  num=$(grep $str $i | wc -l)
+  echo $str is found $num timess inn $i
+ done
 fi
-  

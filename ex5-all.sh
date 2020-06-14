@@ -30,9 +30,6 @@ read str1
 expr index "$str1" a
 expr substr "$str1" 5 10
 
-#6-1
-cat > students
-sort $students | tr [a-z] [A-Z] | write nikol
 
 
 

@@ -1,17 +1,19 @@
-if test $# -ge 1
+if test $# -gt 1
 then
  if test -f $1
- then 
+ then
+  read msg
   cp $1 temp
-  read message
-  echo $message >> temp
-  users=$(who -u | cut -d ' ' -f 1)
-  for i in $users
-  do echo $message $1 | write $i
+  echo $msg >> temp
+  for i in $(who -u | cut -d ' ' -f 1)
+  do 
+   if test $(echo $* | grep $i | wc -w) -gt 0
+   then 
+    write $i < temp
+   fi
   done
   rm temp
  else echo filee doesnt exist
  fi
-else echo there isnt a filee to send
+else echo not enough parameters
 fi
- 

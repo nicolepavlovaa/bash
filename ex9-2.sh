@@ -1,21 +1,19 @@
 if test $# -eq 2
 then
  if test -d $1 -a -d $2
- then 
-  echo directoriesss
-  echo $(ls -F $1 | grep -v /)
-  n1=$(ls -F $1 | grep -v / | grep -E "*\.txt" | wc -l)
-  n2=$(ls -F $2 | grep -v / | grep -E "*\.txt" | wc -l)
-  echo $n1 $n2
-  if test $n1 -gt $n2
+ then
+  if test $(ls $1 | grep ".txt" | wc -l) -gt $(ls $2 | grep ".txt" | wc -l)
   then 
    read dir3
    mkdir $dir3
-   files=$(ls -lF | grep -v / | grep -E "\-rwxrwxrwx*" | rev | cut -d ' ' -f 1 | rev)
-   echo $files
-   mv $files $dir3
+   filestomove=$(ls -l --file-type $1 | grep -v / | grep "rw-rw-rw-" | rev | cut -d ' ' -f 1 | rev)
+   echo $filestomove
+   for i in $filestomove
+   do mv $1/$i $dir3
+   done
+  else echo there are lesss txt files
   fi
- else echo these are not both directories
+ else echo directories dont exist
  fi
-else echo Wrong number of parameters
+else echo wrong number of parameters
 fi
