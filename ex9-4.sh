@@ -1,23 +1,23 @@
-if test $# -ge 2
-then 
- echo aaa
- if test -d $1 -a -d $2
- then
-  mv *.c $1
-  mv *.out $2
-  echo $(ls -l | wc -l)
-  if test $# -eq 3
+if test $# -eq 2 -o $# -eq 3
+then
+  if test -d $1 -a -d $2
   then
-   if test ! -d $3
-   then mkdir $3
-   else echo already exists
+   str=s
+   if  test $# -eq 2
+   then str=$(cat $str.txt)
+   else str=$3
    fi
-  elif test $# -eq 2
-  then 
-   a=$(cat c1)
-   mkdir $a
-  fi
- else echo not directories 
+   cfiles=$(ls | grep "\.c")
+   mv $cfiles $1
+   outfiles=$(ls | grep "\.out")
+   mv $outfiles $2
+   echo "number of files not moved $(ls | wc -l)"
+   if test ! -d $str
+   then mkdir $str
+   fi
+   echo $outfiles >> $str/names
+   echo $cfiles >> $str/names
+ else echo directories dont exist
  fi
-else echo wrong number of parameters
+else echo wrong num of parameters
 fi
